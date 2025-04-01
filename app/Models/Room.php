@@ -12,9 +12,14 @@ class Room extends Model
     protected $table = 'room_detail'; // Đúng với tên bảng trong CSDL
 
     protected $fillable = [
-        'room_type', 'bed_type', 'area', 'view', 
-        'price_per_night', 'remaining_rooms', 
-        'image_url', 'description', 'file_anh'
+        'room_type',
+        'bed_type',
+        'area',
+        'view',
+        'price_per_night',
+        'remaining_room',
+        'description',
+        'file_anh'
     ];
 
     // Liên kết với bảng sức chứa
