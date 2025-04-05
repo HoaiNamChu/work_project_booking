@@ -59,9 +59,9 @@
                                             {{$customer->nationality}}
                                         </td>
                                         <td>
-                                            <button class="btn btn-info">Show</button>
-                                            <button class="btn btn-warning">Update</button>
-                                            <button class="btn btn-danger">Delete</button>
+                                            <button class="btn btn-info"><i class="fa-solid fa-eye"></i></button>
+                                            <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach

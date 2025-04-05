@@ -47,15 +47,9 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="{{route('admin.rooms.create')}}" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
-                                <p>info Box</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Cards</p>
+                                <p>Thêm phòng mới</p>
                             </a>
                         </li>
                     </ul>
@@ -73,18 +67,6 @@
                             <a href="{{route('admin.customers.index')}}" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>info Box</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Cards</p>
                             </a>
                         </li>
                     </ul>

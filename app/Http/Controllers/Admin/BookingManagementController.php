@@ -15,7 +15,7 @@ class BookingManagementController extends Controller
      */
     public function index()
     {
-        $roomBookings = Booking::query()->with('customer')->paginate(10);
+        $roomBookings = Booking::query()->with('customer')->orderBy('booking_date', 'DESC')->paginate(10);
         return view('admin.bookings.index', compact('roomBookings'));
     }
 

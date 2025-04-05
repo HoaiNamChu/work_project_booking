@@ -17,10 +17,12 @@ class Room extends Model
         'area',
         'view',
         'price_per_night',
-        'remaining_room',
+        'remaining_rooms',
         'description',
         'file_anh'
     ];
+
+    public $timestamps = false;
 
     // Liên kết với bảng sức chứa
     public function capacity()
