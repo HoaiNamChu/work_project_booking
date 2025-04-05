@@ -83,7 +83,9 @@ class RoomManagementController extends Controller
      */
     public function show($id)
     {
-        //
+        $room = Room::query()->with('capacity')->findOrFail($id);
+
+        return view('admin.rooms.show', compact('room'));
     }
 
     /**

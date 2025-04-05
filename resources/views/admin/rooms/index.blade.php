@@ -69,7 +69,7 @@
                                         <td>{{number_format($room->price_per_night)}} VND</td>
                                         <td>{{$room->remaining_rooms}}</td>
                                         <td>
-                                            <button class="btn btn-info"><i class="fa-solid fa-eye"></i></button>
+                                            <a href="{{route('admin.rooms.show', $room->id)}}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
                                             <a href="{{route('admin.rooms.edit', $room->id)}}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <form action="{{route('admin.rooms.destroy', $room->id)}}" class="d-inline" method="post">
                                                 @csrf
