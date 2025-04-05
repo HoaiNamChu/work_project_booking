@@ -17,4 +17,6 @@ class Customer extends Model
         'phone',
         'nationality',
     ];
+
+    public $timestamps = false;
 }

@@ -47,6 +47,10 @@ Route::get('/cart/remove/{room_id}', [CartController::class, 'remove'])->name('c
 Route::get('/cart/checkout/{room_id}', [CartController::class, 'checkout'])->name('cart.checkout');
 
 
+Route::post('/payment', [\App\Http\Controllers\User\OrderControler::class, 'payment'])->name('payment');
+Route::get('/payment/callBack', [\App\Http\Controllers\User\OrderControler::class, 'paymentCallback'])->name('payment.callback');
+
+
 // Admin
 
 

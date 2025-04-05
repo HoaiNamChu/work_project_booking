@@ -19,4 +19,6 @@ class Payment extends Model
         'payment_date',
         'payment_method'
     ];
+
+    public $timestamps = false;
 }

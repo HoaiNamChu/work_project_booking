@@ -1,52 +1,29 @@
-<head> <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    /></head>
-  <style>
- 
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Arial, sans-serif;
-      }
-
-      body {
-        background-color: #f4f4f4;
-        min-height: 100vh;
-        max-width: 1440px;
-        margin: 0 auto;
-      }
-
-      .container {
-        padding: 0 40px;
-      }
-
-      .phandau {
+<style>
+    .phandau {
         background: linear-gradient(135deg, #b88a44 0%, #8b6b2f 100%);
         padding: 20px 0;
         color: white;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         margin-top: 10vh;
-      }
+    }
 
-      .phandau h1 {
+    .phandau h1 {
         text-align: center;
         font-size: 3rem;
         margin-bottom: 30px;
         letter-spacing: 2px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-      }
+    }
 
-      .phandaua {
+    .phandaua {
         display: flex;
         justify-content: center;
         gap: 100px;
         margin-top: 40px;
         position: relative;
-      }
+    }
 
-      .phandaua::before {
+    .phandaua::before {
         content: "";
         position: absolute;
         top: 17px;
@@ -56,18 +33,18 @@
         height: 2px;
         background-color: rgba(255, 255, 255, 0.3);
         z-index: 0;
-      }
+    }
 
-      .phandaua1 {
+    .phandaua1 {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 15px;
         position: relative;
         z-index: 1;
-      }
+    }
 
-      .phandaua1 span {
+    .phandaua1 span {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -80,31 +57,31 @@
         font-size: 1.2rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s ease;
-      }
+    }
 
-      .phandaua1:hover span {
+    .phandaua1:hover span {
         transform: scale(1.1);
-      }
+    }
 
-      .phandaua1.active span {
+    .phandaua1.active span {
         background-color: #b88a44;
         color: white;
-      }
+    }
 
-      /* Chỉnh màu số 2 thành #b88a44 */
-      .phandaua1:nth-child(1) span {
+    /* Chỉnh màu số 2 thành #b88a44 */
+    .phandaua1:nth-child(1) span {
         background-color: white;
         color: #b88a44;
-      }
+    }
 
-      .phandaua1 p {
+    .phandaua1 p {
         font-size: 1.2rem;
         font-weight: 500;
         color: white;
         text-align: center;
-      }
+    }
 
-      .phanthanmot {
+    .phanthanmot {
         text-align: center;
         padding: 20px;
         background-color: white;
@@ -112,19 +89,20 @@
         max-width: 900px;
         border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-      }
+    }
 
-      .phanthanmot p {
+    .phanthanmot p {
         text-align: center;
         font-size: 1.3rem;
         color: #e74c3c;
         margin-bottom: 20px;
         font-weight: 500;
-      }
-      .complete-payment {
-    text-align: center;
-    margin-top: 20px;
-}
+    }
+
+    .complete-payment {
+        text-align: center;
+        margin-top: 20px;
+    }
 
     .btn-complete {
         background-color: #4CAF50; /* Màu xanh */
@@ -141,9 +119,9 @@
     .btn-complete:hover {
         background-color: #45a049; /* Màu xanh đậm khi hover */
     }
-      </style>
-       
-  <div class="phandau">
+</style>
+
+<div class="phandau">
     <div class="container">
         <div class="phandaua">
             <!-- Bước 1 -->

@@ -10,7 +10,7 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        $sessionId = session()->getId(); 
+        $sessionId = session()->getId();
 
         // Lấy dữ liệu giỏ hàng theo session_id
         $cartItems = Cart::where('session_id', $sessionId)->get();
@@ -19,7 +19,7 @@ class CartController extends Controller
         if ($cartItems->isEmpty()) {
             return view('user.cart', ['shoppingCart' => []]);
         }
-        
+
         $shoppingCart = $cartItems->map(function ($cart) {
             $room = Room::find($cart->room_id);
             return [
@@ -45,12 +45,16 @@ class CartController extends Controller
             }
         }
         session(['shoppingCart' => array_values($cart)]);
-        return redirect()->route('cart.index')->with('noti', 'Đã xóa phòng khỏi giỏ hàng!');
+        return redirect()->route('cart')->with('noti', 'Đã xóa phòng khỏi giỏ hàng!');
     }
 
     public function checkout($roomId)
     {
-        return redirect()->route('cart.index')->with('noti', 'Chuyển đến trang đặt phòng!');
+
+        $room = Room::query()->find($roomId);
+
+
+        return view('Pages.thanhtoan', compact('room'));
     }
     public function addToCart(Request $request)
     {

@@ -47,13 +47,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./widgets/info-box.html" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>info Box</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./widgets/cards.html" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Cards</p>
                             </a>
@@ -76,13 +76,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./widgets/info-box.html" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>info Box</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="./widgets/cards.html" class="nav-link">
+                            <a href="" class="nav-link">
                                 <i class="nav-icon bi bi-circle"></i>
                                 <p>Cards</p>
                             </a>
@@ -91,7 +91,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="./generate/theme.html" class="nav-link">
+                    <a href="" class="nav-link">
                         <i class="nav-icon bi bi-palette"></i>
                         <p>Revenue</p>
                     </a>

@@ -15,6 +15,8 @@ class Booking extends Model
         'check_in', 'check_out', 'booking_date', 'customer_id', 'status'
     ];
 
+    public $timestamps = false;
+
     // Liên kết với khách hàng
     public function customer()
     {
