@@ -32,27 +32,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-box-seam-fill"></i>
-                        <p>
-                            Rooms
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
+                    <a href="{{route('admin.rooms.index')}}" class="nav-link">
+                        <i class="nav-icon bi bi-palette"></i>
+                        <p>Rooms</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.rooms.index')}}" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>List</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('admin.rooms.create')}}" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>Thêm phòng mới</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">

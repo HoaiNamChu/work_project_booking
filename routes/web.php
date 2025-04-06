@@ -46,6 +46,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/cart/remove/{room_id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/checkout/{room_id}', [CartController::class, 'checkout'])->name('cart.checkout');
 
+//---------Thanh toán-----------//
 
 Route::post('/payment', [\App\Http\Controllers\User\OrderControler::class, 'payment'])->name('payment');
 Route::get('/payment/callBack', [\App\Http\Controllers\User\OrderControler::class, 'paymentCallback'])->name('payment.callback');
