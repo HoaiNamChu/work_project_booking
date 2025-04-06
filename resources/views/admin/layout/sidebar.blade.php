@@ -3,12 +3,8 @@
     <div class="sidebar-brand">
         <!--begin::Brand Link-->
         <a href="{{ route('admin.dashboard') }}" class="brand-link">
-            <!--begin::Brand Image-->
-            <img src="{{asset('admin/assets/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
-                 class="brand-image opacity-75 shadow"/>
-            <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">AdminLTE 4</span>
+            <h1 class="brand-text fw-light ">Admin</h1>
             <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -38,21 +34,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-box-seam-fill"></i>
-                        <p>
-                            Customers
-                            <i class="nav-arrow bi bi-chevron-right"></i>
-                        </p>
+                    <a href="{{route('admin.customers.index')}}" class="nav-link">
+                        <i class="nav-icon bi bi-palette"></i>
+                        <p>Customer</p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{route('admin.customers.index')}}" class="nav-link">
-                                <i class="nav-icon bi bi-circle"></i>
-                                <p>List</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="nav-item">

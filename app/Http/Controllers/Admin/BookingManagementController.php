@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookingManagementController extends Controller
 {
@@ -59,7 +60,10 @@ class BookingManagementController extends Controller
      */
     public function edit($id)
     {
-        //
+        $booking = Booking::query()
+            ->with('customer', 'payment', 'rooms')
+            ->findOrFail($id);
+        return view('admin.bookings.edit', compact('booking'));
     }
 
     /**
@@ -82,6 +86,14 @@ class BookingManagementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $booking = Booking::query()->findOrFail($id);
+
+        $booking->payment()->delete();
+
+        DB::table('room_booking_detail')->where('booking_id', $id)->delete();
+
+        $booking->delete();
+
+        return redirect()->route('admin.bookings.index');
     }
 }

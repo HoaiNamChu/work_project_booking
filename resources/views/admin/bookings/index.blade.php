@@ -50,16 +50,27 @@
                                 <tbody>
                                 @foreach($roomBookings as $roomBooking)
                                     <tr class="align-middle">
-                                        <td>{{$roomBooking->id}}.</td>
-                                        <td>{{$roomBooking->customer->full_name}}</td>
+                                        <td>{{$roomBooking->id}}</td>
+                                        <td>{{$roomBooking->customer->full_name ?? 'Khách vãng lai'}}</td>
                                         <td>{{date('d/m/Y', strtotime($roomBooking->check_in))}}</td>
                                         <td>{{date('d/m/Y', strtotime($roomBooking->check_out))}}</td>
                                         <td>{{date('d/m/Y H:i:s', strtotime($roomBooking->booking_date))}}</td>
-                                        <td>{{$roomBooking->status}}</td>
                                         <td>
-                                            <button class="btn btn-info"><i class="fa-solid fa-eye"></i></button>
-                                            <button class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                                            @if($roomBooking->status == 'đang xử lý')
+                                                <span class="badge bg-warning">{{ $roomBooking->status }}</span>
+                                            @elseif($roomBooking->status == 'đã xác nhận')
+                                                <span class="badge bg-success">{{ $roomBooking->status }}</span>
+                                            @else
+                                                <span class="badge bg-danger">{{ $roomBooking->status }}</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{route('admin.bookings.edit', $roomBooking->id)}}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <form action="{{route('admin.bookings.destroy', $roomBooking->id)}}" class="d-inline" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Bạn có muốn xóa đơn này không?')"><i class="fa-solid fa-trash"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

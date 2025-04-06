@@ -48,7 +48,8 @@ class CustomerManagementController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::query()->with('bookings')->findOrFail($id);
+        return view('admin.customers.show', compact('customer'));
     }
 
     /**
@@ -59,7 +60,9 @@ class CustomerManagementController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::query()->findOrFail($id);
+
+        return view('admin.customers.edit', compact('customer'));
     }
 
     /**
@@ -71,7 +74,26 @@ class CustomerManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'full_name' => 'required',
+            'phone' => 'required|unique:customer,phone,' . $id,
+            'email' => 'required|email|unique:customer,email,'.$id,
+            'nationality' => 'required',
+        ]);
+
+        $data = [
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'nationality' => $request->nationality
+        ];
+
+        $customer = Customer::query()->findOrFail($id);
+
+        $customer->update($data);
+
+        return redirect()->route('admin.customers.index');
+
     }
 
     /**
@@ -82,6 +104,10 @@ class CustomerManagementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $customer = Customer::query()->findOrFail($id);
+
+        $customer->delete();
+
+        return redirect()->route('admin.customers.index');
     }
 }

@@ -67,8 +67,13 @@ Route::get('/payment/callBack', [BookingController::class, 'paymentCallback'])->
 
 
 Route::prefix('admins')
+//    ->middleware(['admin'])
     ->as('admin.')
     ->group(function () {
+
+        Route::get('/login', [\App\Http\Controllers\Admin\AuthController::class, 'showFormLogin'])->name('login');
+        Route::post('/login', [\App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login');
+
         Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource('customers', \App\Http\Controllers\Admin\CustomerManagementController::class);

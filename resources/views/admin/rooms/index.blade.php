@@ -69,12 +69,12 @@
                                         <td>{{number_format($room->price_per_night)}} VND</td>
                                         <td>{{$room->remaining_rooms}}</td>
                                         <td>
-                                            <a href="{{route('admin.rooms.show', $room->id)}}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
-                                            <a href="{{route('admin.rooms.edit', $room->id)}}" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <a href="{{route('admin.rooms.show', $room->id)}}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="{{route('admin.rooms.edit', $room->id)}}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                             <form action="{{route('admin.rooms.destroy', $room->id)}}" class="d-inline" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-danger" type="submit" onclick="return confirm('Bạn có muốn xóa phòng này không?')"><i class="fa-solid fa-trash"></i></button>
+                                                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Bạn có muốn xóa phòng này không?')"><i class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>
