@@ -44,7 +44,7 @@ button {
 }
 
 .primary-btn {
-  padding: 10px 20px;
+  padding: 10px 10px;
   background: #B88A44;
   font-weight: bold;
   color: white;
@@ -143,7 +143,7 @@ input {
 }
 
 .book {
-  padding: 40px 0;
+  padding: 20px 0;
   background: #3a3434;
   color: #fff;
 }
@@ -976,7 +976,7 @@ button {
 .book-now {
   background-color: #B88A44;
   color: white;
-  width: 220px;
+  width: 150px;
 }
 
 
@@ -1046,10 +1046,8 @@ button:hover {
 }
 
 .room-details {
-  padding: 20px;
+  padding: 30px;
   background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 .cart-container{
     display: flex;

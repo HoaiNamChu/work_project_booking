@@ -150,17 +150,22 @@
             
             <p><i class="fas fa-door-open"></i> <strong>Số phòng còn lại:</strong> {{ $room->remaining_rooms }}</p>
             <div class="room-actions">
-            <form method="POST" action="{{ route('cart.add') }}">
+                <form method="GET" action="{{ route('thongtin') }}">
                 @csrf
-                <input type="hidden" name="room_id" value="{{ $room->id }}">
-                <input type="hidden" name="check_in" value="{{ today()->toDateString() }}">
-                <input type="hidden" name="check_out" value="{{ today()->addDay()->toDateString() }}">
-                <button type="submit" class="add-cart btn primary-btn">Thêm vào giỏ hàng</button>
-            </form>
-            <form method="GET" action="{{ route('thongtin') }}">
-                <input type="hidden" name="room_id" value="{{ $room->id }}">
-                <button type="submit" class="btn primary-btn">Đặt ngay</button>
-            </form>
+                    <input type="hidden" name="room_id" value="{{ $room->id }}">
+                    <input type="hidden" name="check_in" value="{{ now()->toDateString() }}">
+                    <input type="hidden" name="check_out" value="{{ now()->addDays(1)->toDateString() }}">
+                    <input type="hidden" name="adults" value="1">
+                    <input type="hidden" name="children" value="0">
+                    <button type="submit" class="book-now btn primary-btn" style="width:150px; border-radius:5px;">Đặt ngay</button>
+                </form>
+                <form method="POST" action="{{ route('cart.add') }}">
+                    @csrf
+                    <input type="hidden" name="room_id" value="{{ $room->id }}">
+                    <input type="hidden" name="check_in" value="{{ today()->toDateString() }}">
+                    <input type="hidden" name="check_out" value="{{ today()->addDay()->toDateString() }}">
+                    <button type="submit" class="add-cart btn primary-btn">Thêm vào giỏ hàng</button>
+                </form>
         </div>
     </div>
     </div>

@@ -75,12 +75,13 @@
                         
                         <div class="room-actions">
                             <form method="GET" action="{{ route('thongtin') }}">
+                                @csrf
                                 <input type="hidden" name="room_id" value="{{ $room->id }}">
                                 <input type="hidden" name="check_in" value="{{ $data['check_in'] }}">
                                 <input type="hidden" name="check_out" value="{{ $data['check_out'] }}">
                                 <input type="hidden" name="adults" value="{{ $data['adults'] }}">
                                 <input type="hidden" name="children" value="{{ $data['children'] }}">
-                                <button type="submit" class="btn primary-btn">Đặt ngay</button>
+                                <button type="submit" class="primary-btn">Đặt ngay</button>
                             </form>
 
                             <form id="addToCartForm">
@@ -88,7 +89,7 @@
                                 <input type="hidden" name="room_id" value="{{ $room->id }}">
                                 <input type="hidden" name="check_in" value="{{ $data['check_in'] }}">
                                 <input type="hidden" name="check_out" value="{{ $data['check_out'] }}">
-                                <button type="submit" class="btn primary-btn">Thêm vào giỏ hàng</button>
+                                <button type="submit" class="primary-btn">Thêm vào giỏ hàng</button>
                             </form>
                             <div id="cart-message" style="color: green; display: none;">✅ Đã thêm vào giỏ hàng!</div>
                         </div>
