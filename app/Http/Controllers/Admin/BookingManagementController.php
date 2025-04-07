@@ -134,11 +134,21 @@ class BookingManagementController extends Controller
      */
     public function destroy($id)
     {
-        $booking = Booking::query()->findOrFail($id);
+        $booking = Booking::query()->with('rooms')->findOrFail($id);
+
+        foreach ($booking->rooms as $room){
+            $room = Room::query()->with('capacity')->findOrFail($room->id);
+            if ((int)$room->remaining_rooms < (int)$room->capacity->max_capacity){
+                $room->update([
+                    'remaining_rooms' => $room->remaining_rooms + 1
+                ]);
+            }
+        }
 
         $booking->payment()->delete();
 
         DB::table('room_booking_detail')->where('booking_id', $id)->delete();
+
 
         $booking->delete();
 
