@@ -44,6 +44,12 @@ class BookingController extends Controller
 
         // Lấy thông tin phòng đã đặt từ session
         $bookedRooms = session()->get('bookedRooms', []);
+        foreach ($bookedRooms as $index => $room) {
+            $room = Room::query()->find($room['room_id']);
+            if ($room->remaining_rooms <= 0){
+                return redirect()->route('showBooking')->with('Error', 'Room is out of stock');
+            }
+        }
         $totalAmount = array_sum(array_column($bookedRooms, 'room_total'));
 
         // Lưu thông tin khách hàng vào session
@@ -76,47 +82,63 @@ class BookingController extends Controller
     {
 
         $customerInfo = session()->get('customer_info', []);
-
-
-        $customer = '';
-
-        if (auth()->check()) {
-            $customer = auth()->user();
-        }else{
-            $customer = Customer::create([
-                'full_name' => $customerInfo['full_name'],
-                'email' => $customerInfo['email'],
-                'phone' => $customerInfo['phone'],
-                'nationality' => $customerInfo['nationality'],
-            ]);
+        foreach ($customerInfo['booked_rooms'] as $index => $room) {
+            $room = Room::query()->find($room['room_id']);
+            if ($room->remaining_rooms <= 0){
+                return redirect()->route('showBooking')->with('Error', 'Room is out of stock');
+            }
         }
 
+        $customer = Customer::create([
+            'full_name' => $customerInfo['full_name'],
+            'email' => $customerInfo['email'],
+            'phone' => $customerInfo['phone'],
+            'nationality' => $customerInfo['nationality'],
+        ]);
+
+        $booking = Booking::create([
+            'check_in' => Carbon::now(),
+            'check_out' => Carbon::now(),
+            'booking_date' => Carbon::now(),
+            'status' => 'đang xử lý',
+            'customer_id' => $customer->id,
+        ]);
+        $discountedPrice = 0;
+        $totalAmount = 0;
         foreach ($customerInfo['booked_rooms'] as $value) {
-            $booking = Booking::create([
+            $booking->update([
                 'check_in' => $value['check_in'],
                 'check_out' => $value['check_out'],
-                'booking_date' => Carbon::now(),
-                'status' => 'đang xử lý',
-                'customer_id' => $customer->id,
             ]);
-
             DB::table('room_booking_detail')->insert([
                 'booking_id' => $booking->id,
                 'room_id' => $value['room_id'],
             ]);
-
-            $payment = Payment::create([
-                'booking_id' => $booking->id,
-                'amount' => $value['discounted_price'],
-                'tax' => 0,
-                'total_amount' => $value['room_total'],
-                'payment_date' => Carbon::now(),
-                'payment_method' => $customerInfo['payment_method'],
-            ]);
+            $discountedPrice += $value['discounted_price'];
+            $totalAmount += $value['discounted_price'];
         }
+
+        $payment = Payment::create([
+            'booking_id' => $booking->id,
+            'amount' => $discountedPrice,
+            'tax' => 0,
+            'total_amount' => $totalAmount,
+            'payment_date' => Carbon::now(),
+            'payment_method' => $customerInfo['payment_method'],
+        ]);
 
         if ($customerInfo['payment_method'] === 'VNPAY') {
             return $this->processOnlinePayment($payment);
+        }
+
+        foreach ($customerInfo['booked_rooms'] as $value) {
+           $room =  Room::query()->where('id', $value['room_id'])->first();
+            if ($room->remaining_rooms <= 0) {
+                return 0;
+            }
+           $room->update([
+               'remaining_rooms' => (int)$room->remaining_rooms - 1,
+           ]);
         }
 
         session()->forget('bookedRooms');

@@ -39,7 +39,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form action="{{route('admin.customers.update', $customer->id)}}" method="POST">
+                        <form action="{{route('admin.customers.update', $customer->id_taikhoan)}}" method="POST">
                             @csrf
                             @method('PUT')
                             <!--begin::Body-->
@@ -48,7 +48,7 @@
                                     <label for="full_name" class="form-label">Họ tên</label>
                                     <input type="text" class="form-control @error('full_name') is-invalid @enderror"
                                            name="full_name" id="full_name"
-                                           value="{{$customer->full_name}}"/>
+                                           value="{{$customer->ten}}"/>
                                     @error('full_name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -63,31 +63,11 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Số điện thoại</label>
-                                    <input type="text" name="phone"
-                                           value="{{$customer->phone}}"
-                                           class="form-control @error('phone') is-invalid @enderror"
-                                           id="exampleInputPassword1"/>
-                                    @error('phone')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Quốc tịch</label>
-                                    <input type="text" name="nationality"
-                                           value="{{$customer->nationality}}"
-                                           class="form-control @error('nationality') is-invalid @enderror"
-                                           id="exampleInputPassword1"/>
-                                    @error('nationality')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
                             </div>
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #B88A44; border-color: #B88A44;">Cập nhật</button>
                             </div>
                             <!--end::Footer-->
                         </form>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -75,7 +77,53 @@ class BookingManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'full_name' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'nationality' => 'required',
+            'check_in' => 'required',
+            'check_out' => 'required',
+            'status' => 'required',
+            'roomBookingId' => 'required',
+        ]);
+
+        $dataBooking = [
+            'check_in' => Carbon::parse($request->check_in)->format('Y-m-d'),
+            'check_out' => Carbon::parse($request->check_out)->format('Y-m-d'),
+            'status' => $request->status
+        ];
+
+
+        if ($dataBooking['check_in'] != null && $dataBooking['check_out'] != null) {
+            if (Carbon::parse($dataBooking['check_in']) > Carbon::parse($dataBooking['check_out'])){
+                return redirect()->back()->withErrors(['message' => 'Check-in must be after check out']);
+            }
+        }
+
+//        foreach ($request->roomBookingId as $key => $value) {
+//            $roomBooking = Room::query()->with('bookings')->where('id', $value)->first();
+//            foreach ($roomBooking->bookings as $booking) {
+//                if ($booking->id !== $id) {
+//                    if (Carbon::parse($booking->check_out) < Carbon::parse($dataBooking['check_in'])){
+//                        return redirect()->back();
+//                    }
+//                }
+//            }
+//        }
+
+        $booking = Booking::query()->with('rooms')->findOrFail($id);
+
+        $booking->rooms()->sync(request('roomBookingId'));
+
+        $booking->update([
+            'check_in' => $dataBooking['check_in'],
+            'check_out' => $dataBooking['check_out'],
+            'status' => $dataBooking['status'],
+        ]);
+
+
+        return redirect()->route('admin.bookings.index')->with('success', 'Booking updated successfully');
     }
 
     /**

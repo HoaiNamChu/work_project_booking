@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class CustomerManagementController extends Controller
 {
@@ -15,7 +17,7 @@ class CustomerManagementController extends Controller
      */
     public function index()
     {
-        $customers = Customer::query()->paginate(10);
+        $customers = DB::table('taikhoan')->paginate(10);
         return view('admin.customers.index', compact('customers'));
     }
 
@@ -48,7 +50,7 @@ class CustomerManagementController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::query()->with('bookings')->findOrFail($id);
+        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->first();
         return view('admin.customers.show', compact('customer'));
     }
 
@@ -60,7 +62,7 @@ class CustomerManagementController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::query()->findOrFail($id);
+        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->first();
 
         return view('admin.customers.edit', compact('customer'));
     }
@@ -76,21 +78,15 @@ class CustomerManagementController extends Controller
     {
         request()->validate([
             'full_name' => 'required',
-            'phone' => 'required|unique:customer,phone,' . $id,
-            'email' => 'required|email|unique:customer,email,'.$id,
-            'nationality' => 'required',
+            'email' => 'required|email|'.Rule::unique('taikhoan', 'email')->ignore($id, 'id_taikhoan'),
         ]);
 
         $data = [
-            'full_name' => $request->full_name,
+            'ten' => $request->full_name,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'nationality' => $request->nationality
         ];
 
-        $customer = Customer::query()->findOrFail($id);
-
-        $customer->update($data);
+        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->update($data);
 
         return redirect()->route('admin.customers.index');
 
@@ -104,7 +100,7 @@ class CustomerManagementController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::query()->findOrFail($id);
+        $customer = DB::table('taikhoan')->where('id_taikhoan',$id);
 
         $customer->delete();
 

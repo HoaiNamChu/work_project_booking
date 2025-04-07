@@ -45,7 +45,7 @@
                                 <label for="full_name" class="form-label">Họ tên</label>
                                 <input type="text" class="form-control"
                                        name="full_name" id="full_name"
-                                       value="{{$customer->full_name}}"
+                                       value="{{$customer->ten}}"
                                 disabled
                                 />
                             </div>
@@ -56,26 +56,12 @@
                                        class="form-control"
                                        id="exampleInputPassword1" disabled/>
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Số điện thoại</label>
-                                <input type="text" name="phone"
-                                       value="{{$customer->phone}}"
-                                       class="form-control "
-                                       id="exampleInputPassword1" disabled/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Quốc tịch</label>
-                                <input type="text" name="nationality"
-                                       value="{{$customer->nationality}}"
-                                       class="form-control"
-                                       id="exampleInputPassword1" disabled/>
-                            </div>
                         </div>
                         <!--end::Body-->
                         <!--begin::Footer-->
                         <div class="card-footer">
                             <a href="{{route('admin.customers.index')}}" class="btn btn-secondary">Quay lại</a>
-                            <a href="{{route('admin.customers.edit', $customer->id)}}" class="btn btn-warning">Cập nhật</a>
+                            <a href="{{route('admin.customers.edit', $customer->id_taikhoan)}}" class="btn btn-warning">Cập nhật</a>
                         </div>
                         <!--end::Footer-->
                         <!--end::Form-->
@@ -84,55 +70,55 @@
                 </div>
                 <!--end::Col-->
 
-                <div class="col-md-7">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title">Lịch sử đặt phòng</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Check in</th>
-                                    <th>Check out</th>
-                                    <th>Ngày đặt</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+{{--                <div class="col-md-7">--}}
+{{--                    <div class="card mb-4">--}}
+{{--                        <div class="card-header">--}}
+{{--                            <h3 class="card-title">Lịch sử đặt phòng</h3>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.card-header -->--}}
+{{--                        <div class="card-body">--}}
+{{--                            <table class="table table-bordered">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th style="width: 10px">#</th>--}}
+{{--                                    <th>Check in</th>--}}
+{{--                                    <th>Check out</th>--}}
+{{--                                    <th>Ngày đặt</th>--}}
+{{--                                    <th>Trạng thái</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
 
-                                   @foreach($customer->bookings as $key => $item)
-                                       <tr class="align-middle">
-                                           <td>{{ $key + 1 }}</td>
-                                           <td>{{ $item-> check_in}}</td>
-                                           <td>
-                                               {{ $item->check_out }}
-                                           </td>
-                                           <td>
-                                               {{ $item->booking_date }}
-                                           </td>
-                                           <td>{{ $item->status }}</td>
-                                       </tr>
-                                   @endforeach
+{{--                                   @foreach($customer->bookings as $key => $item)--}}
+{{--                                       <tr class="align-middle">--}}
+{{--                                           <td>{{ $key + 1 }}</td>--}}
+{{--                                           <td>{{ $item-> check_in}}</td>--}}
+{{--                                           <td>--}}
+{{--                                               {{ $item->check_out }}--}}
+{{--                                           </td>--}}
+{{--                                           <td>--}}
+{{--                                               {{ $item->booking_date }}--}}
+{{--                                           </td>--}}
+{{--                                           <td>{{ $item->status }}</td>--}}
+{{--                                       </tr>--}}
+{{--                                   @endforeach--}}
 
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-end">
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                        <!-- /.card-body -->--}}
+{{--                        <div class="card-footer clearfix">--}}
+{{--                            <ul class="pagination pagination-sm m-0 float-end">--}}
 {{--                                {{$customers->links()}}--}}
-                                {{--                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>--}}
-                                {{--                                <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
-                                {{--                                <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
-                                {{--                                <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
-                                {{--                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>--}}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+{{--                                --}}{{--                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>--}}
+{{--                                --}}{{--                                <li class="page-item"><a class="page-link" href="#">1</a></li>--}}
+{{--                                --}}{{--                                <li class="page-item"><a class="page-link" href="#">2</a></li>--}}
+{{--                                --}}{{--                                <li class="page-item"><a class="page-link" href="#">3</a></li>--}}
+{{--                                --}}{{--                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
             <!--end::Row-->

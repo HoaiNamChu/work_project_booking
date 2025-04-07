@@ -8,12 +8,12 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Simple Tables</h3>
+                    <h3 class="mb-0">Danh sách phòng</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Simple Tables</li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Danh sách phòng</li>
                     </ol>
                 </div>
             </div>
@@ -29,7 +29,9 @@
             <!--begin::Row-->
             <div class="row mb-3">
                 <div class="col-md-12">
-                    <a href="{{route('admin.rooms.create')}}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>Thêm phòng mới</a>
+                    <a href="{{route('admin.rooms.create')}}" class="btn btn-primary"
+                       style="background-color: #B88A44; border-color: #B88A44;"><i class="fa-solid fa-plus"></i>Thêm
+                        phòng mới</a>
                 </div>
             </div>
             <div class="row">
@@ -59,7 +61,8 @@
                                 @foreach($rooms as $room)
                                     <tr class="align-middle">
                                         <td>{{$room->id}}.</td>
-                                        <td><img src="{{\Illuminate\Support\Facades\Storage::url($room->file_anh)}}" alt="" srcset="" width="100px">
+                                        <td><img src="{{\Illuminate\Support\Facades\Storage::url($room->file_anh)}}"
+                                                 alt="" srcset="" width="100px">
                                         </td>
                                         <td>{{$room->room_type}}</td>
                                         <td>{{$room->bed_type}}</td>
@@ -69,12 +72,17 @@
                                         <td>{{number_format($room->price_per_night)}} VND</td>
                                         <td>{{$room->remaining_rooms}}</td>
                                         <td>
-                                            <a href="{{route('admin.rooms.show', $room->id)}}" class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
-                                            <a href="{{route('admin.rooms.edit', $room->id)}}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <form action="{{route('admin.rooms.destroy', $room->id)}}" class="d-inline" method="post">
+                                            <a href="{{route('admin.rooms.show', $room->id)}}"
+                                               class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="{{route('admin.rooms.edit', $room->id)}}"
+                                               class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <form action="{{route('admin.rooms.destroy', $room->id)}}" class="d-inline"
+                                                  method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Bạn có muốn xóa phòng này không?')"><i class="fa-solid fa-trash"></i></button>
+                                                <button class="btn btn-sm btn-danger" type="submit"
+                                                        onclick="return confirm('Bạn có muốn xóa phòng này không?')"><i
+                                                        class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>

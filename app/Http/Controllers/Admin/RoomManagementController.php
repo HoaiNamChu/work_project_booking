@@ -126,7 +126,6 @@ class RoomManagementController extends Controller
             'area' => request('area'),
             'view' => request('view'),
             'price_per_night' => request('price_per_night'),
-            'remaining_rooms' => (int)request('max_capacity'),
             'description' => request('description'),
         ];
 

@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Danh sách khách hàng</li>
                     </ol>
                 </div>
@@ -42,38 +42,34 @@
                                     <th style="width: 10px">#</th>
                                     <th>Full name</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>National</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($customers as $customer)
-                                    <tr class="align-middle">
-                                        <td>{{$customer->id}}.</td>
-                                        <td>{{$customer->full_name}}</td>
-                                        <td>{{$customer->email}}</td>
-                                        <td>
-                                            {{$customer->phone}}
-                                        </td>
-                                        <td>
-                                            {{$customer->nationality}}
-                                        </td>
-                                        <td>
-                                            <a href="{{route('admin.customers.show', $customer->id)}}"
-                                               class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
-                                            <a href="{{route('admin.customers.edit', $customer->id)}}"
-                                               class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <form action="{{route('admin.customers.destroy', $customer->id)}}"
-                                                  class="d-inline" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Bạn có muốn xóa người dùng này không?')">
-                                                    <i class="fa-solid fa-trash"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                    @if($customer->is_admin != 1)
+                                        <tr class="align-middle">
+                                            <td>{{$customer->id_taikhoan}}.</td>
+                                            <td>{{$customer->ten}}</td>
+                                            <td>{{$customer->email}}</td>
+                                            <td>
+                                                <a href="{{route('admin.customers.show', $customer->id_taikhoan)}}"
+                                                   class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
+                                                <a href="{{route('admin.customers.edit', $customer->id_taikhoan)}}"
+                                                   class="btn btn-sm btn-warning"><i
+                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                <form
+                                                    action="{{route('admin.customers.destroy', $customer->id_taikhoan)}}"
+                                                    class="d-inline" method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-sm btn-danger"
+                                                            onclick="return confirm('Bạn có muốn xóa người dùng này không?')">
+                                                        <i class="fa-solid fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

@@ -18,10 +18,9 @@ class DashboardController extends Controller
      */
     public function index( Request $request )
     {
-
         $bookingCount = Booking::query()->count();
 
-        $customerCount = Customer::query()->count();
+        $customerCount = DB::table('taikhoan')->count();
 
         $roomCount = Room::query()->count();
 

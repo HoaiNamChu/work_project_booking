@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                     </ol>
                 </div>
@@ -113,7 +113,7 @@
                             <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}">
                         </div>
                         <div class="col-md-3 d-flex align-items-end gap-2">
-                            <button type="submit" class="btn btn-primary">Lọc</button>
+                            <button type="submit" class="btn btn-primary" style="background-color: #B88A44; border-color: #B88A44;">Lọc</button>
                             <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary">Xoá bộ lọc</a>
                         </div>
                     </form>

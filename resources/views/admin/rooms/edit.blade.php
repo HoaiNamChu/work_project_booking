@@ -9,12 +9,12 @@
             <!--begin::Row-->
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Thêm phòng mới</h3>
+                    <h3 class="mb-0">Sửa thông tin phòng</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Thêm phòng mới</li>
+                        <li class="breadcrumb-item active" aria-current="page">Sửa thông tin phòng</li>
                     </ol>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                             <!--end::Body-->
                             <!--begin::Footer-->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary" style="background-color: #B88A44; border-color: #B88A44;">Update</button>
                             </div>
                             <!--end::Footer-->
                         </form>

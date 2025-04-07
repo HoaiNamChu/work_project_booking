@@ -42,7 +42,7 @@ class SearchController extends Controller
                     ->where('start_date', '<=', $data['check_in'])
                     ->where('end_date', '>=', $data['check_out'])
                     ->first();
-                
+
                 $room->discount_percent = $discount->discount_percent ?? 0;
                 return $room;
             });
@@ -72,9 +72,13 @@ class SearchController extends Controller
             return redirect()->back()->withErrors(['message' => 'Phòng không tồn tại']);
         }
 
+        if ($room->remaining_rooms <= 0) {
+            return redirect()->back()->withErrors(['message' => 'Room is out of stock']);
+        }
+
 
         $stayDays = \Carbon\Carbon::parse($data['check_out'])->diffInDays(\Carbon\Carbon::parse($data['check_in']));
-    
+
         $discount = DB::table('discount')
             ->where('room_id', $room->id)
             ->where('start_date', '<=', $data['check_in'])
