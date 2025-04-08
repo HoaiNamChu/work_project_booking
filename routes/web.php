@@ -71,7 +71,7 @@ Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout
 
 
 Route::prefix('admins')
-//    ->middleware(['admin'])
+    ->middleware(['checkAdmin'])
     ->as('admin.')
     ->group(function () {
 
