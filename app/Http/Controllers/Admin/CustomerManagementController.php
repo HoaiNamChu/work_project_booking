@@ -17,7 +17,7 @@ class CustomerManagementController extends Controller
      */
     public function index()
     {
-        $customers = DB::table('taikhoan')->paginate(10);
+        $customers = DB::table('customer')->paginate(10);
         return view('admin.customers.index', compact('customers'));
     }
 
@@ -50,7 +50,7 @@ class CustomerManagementController extends Controller
      */
     public function show($id)
     {
-        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->first();
+        $customer = DB::table('customer')->where('id', $id)->first();
         return view('admin.customers.show', compact('customer'));
     }
 

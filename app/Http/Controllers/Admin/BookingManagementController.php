@@ -16,122 +16,65 @@ class BookingManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+    public function index(Request $request)
     {
-        $roomBookings = Booking::query()->with('customer')->orderBy('booking_date', 'DESC')->paginate(10);
+        $query = Booking::with('customer')->orderBy('booking_date', 'DESC');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $roomBookings = $query->paginate(10)->withQueryString();
+
         return view('admin.bookings.index', compact('roomBookings'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $booking = Booking::query()
-            ->with('customer', 'payment', 'rooms')
-            ->findOrFail($id);
-        return view('admin.bookings.edit', compact('booking'));
+        $booking = Booking::with('customer', 'rooms')->findOrFail($id);
+        $rooms = Room::all();
+
+        return view('admin.bookings.edit', compact('booking', 'rooms'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        request()->validate([
-            'full_name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'nationality' => 'required',
-            'check_in' => 'required',
-            'check_out' => 'required',
-            'status' => 'required',
-            'roomBookingId' => 'required',
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|email',
+            'nationality' => 'required|string|max:100',
+            'check_in' => 'required|date',
+            'check_out' => 'required|date|after_or_equal:check_in',
+            'status' => 'required|string',
+            'roomBookingId' => 'required|array',
         ]);
 
-        $dataBooking = [
+        $booking = Booking::with('customer', 'rooms')->findOrFail($id);
+
+        // Cập nhật thông tin khách hàng
+        $booking->customer->update([
+            'full_name' => $request->input('full_name'),
+            'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
+            'nationality' => $request->input('nationality'),
+        ]);
+
+        // Cập nhật thông tin booking
+        $booking->update([
             'check_in' => Carbon::parse($request->check_in)->format('Y-m-d'),
             'check_out' => Carbon::parse($request->check_out)->format('Y-m-d'),
-            'status' => $request->status
-        ];
-
-
-        if ($dataBooking['check_in'] != null && $dataBooking['check_out'] != null) {
-            if (Carbon::parse($dataBooking['check_in']) > Carbon::parse($dataBooking['check_out'])){
-                return redirect()->back()->withErrors(['message' => 'Check-in must be after check out']);
-            }
-        }
-
-//        foreach ($request->roomBookingId as $key => $value) {
-//            $roomBooking = Room::query()->with('bookings')->where('id', $value)->first();
-//            foreach ($roomBooking->bookings as $booking) {
-//                if ($booking->id !== $id) {
-//                    if (Carbon::parse($booking->check_out) < Carbon::parse($dataBooking['check_in'])){
-//                        return redirect()->back();
-//                    }
-//                }
-//            }
-//        }
-
-        $booking = Booking::query()->with('rooms')->findOrFail($id);
-
-        $booking->rooms()->sync(request('roomBookingId'));
-
-        $booking->update([
-            'check_in' => $dataBooking['check_in'],
-            'check_out' => $dataBooking['check_out'],
-            'status' => $dataBooking['status'],
+            'status' => $request->status,
         ]);
 
+        // Cập nhật danh sách phòng (many-to-many)
+        $booking->rooms()->sync($request->roomBookingId);
 
-        return redirect()->route('admin.bookings.index')->with('success', 'Booking updated successfully');
+        return redirect()->route('admin.bookings.index')->with('success', 'Cập nhật đặt phòng thành công!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $booking = Booking::query()->with('rooms')->findOrFail($id);
