@@ -15,9 +15,17 @@ class CustomerManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = DB::table('customer')->paginate(10);
+
+        $query = Customer::query();
+
+        if (request('key')) {
+            $query->where('full_name', 'like', '%' . request('key') . '%')
+            ->orWhere('email', 'like', '%' . request('key') . '%');
+        }
+
+        $customers = $query->paginate(10)->withQueryString();
         return view('admin.customers.index', compact('customers'));
     }
 
@@ -62,7 +70,7 @@ class CustomerManagementController extends Controller
      */
     public function edit($id)
     {
-        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->first();
+        $customer = DB::table('customer')->where('id', $id)->first();
 
         return view('admin.customers.edit', compact('customer'));
     }
@@ -78,15 +86,19 @@ class CustomerManagementController extends Controller
     {
         request()->validate([
             'full_name' => 'required',
-            'email' => 'required|email|'.Rule::unique('taikhoan', 'email')->ignore($id, 'id_taikhoan'),
+            'email' => 'required|email',
+            'phone' => 'required',
+            'nationality' => 'required',
         ]);
 
         $data = [
-            'ten' => $request->full_name,
+            'full_name' => $request->full_name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'nationality' => $request->nationality,
         ];
 
-        $customer = DB::table('taikhoan')->where('id_taikhoan', $id)->update($data);
+        $customer = DB::table('customer')->where('id', $id)->update($data);
 
         return redirect()->route('admin.customers.index');
 
@@ -100,7 +112,7 @@ class CustomerManagementController extends Controller
      */
     public function destroy($id)
     {
-        $customer = DB::table('taikhoan')->where('id_taikhoan',$id);
+        $customer = DB::table('customer')->where('id',$id);
 
         $customer->delete();
 

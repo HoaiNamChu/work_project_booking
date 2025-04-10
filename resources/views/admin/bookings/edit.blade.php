@@ -99,7 +99,7 @@
                     <div class="col-md-6">
                         <div class="card card-primary card-outline mb-4">
                             <div class="card-header">
-                                <div class="card-title">Cập nhật đơn hàng</div>
+                                <div class="card-title">Cập nhật đặt phòng</div>
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">

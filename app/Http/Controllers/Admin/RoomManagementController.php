@@ -15,9 +15,17 @@ class RoomManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::query()->with('capacity')->paginate(10);
+
+        $query = Room::query();
+
+        if (request('key')) {
+            $query->where('room_type', 'like', '%' . request('key') . '%');
+        }
+
+
+        $rooms = $query->with('capacity')->paginate(10)->withQueryString();
         return view('admin.rooms.index', compact('rooms'));
     }
 

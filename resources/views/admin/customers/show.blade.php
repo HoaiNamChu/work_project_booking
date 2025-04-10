@@ -45,7 +45,7 @@
                                 <label for="full_name" class="form-label">Họ tên</label>
                                 <input type="text" class="form-control"
                                        name="full_name" id="full_name"
-                                       value="{{$customer->ten}}"
+                                       value="{{$customer->full_name}}"
                                 disabled
                                 />
                             </div>
@@ -56,12 +56,26 @@
                                        class="form-control"
                                        id="exampleInputPassword1" disabled/>
                             </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Email</label>
+                                <input type="text" name="phone"
+                                       value="{{$customer->phone}}"
+                                       class="form-control"
+                                       id="exampleInputPassword1" disabled/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Email</label>
+                                <input type="text" name="nationality"
+                                       value="{{$customer->nationality}}"
+                                       class="form-control"
+                                       id="exampleInputPassword1" disabled/>
+                            </div>
                         </div>
                         <!--end::Body-->
                         <!--begin::Footer-->
                         <div class="card-footer">
                             <a href="{{route('admin.customers.index')}}" class="btn btn-secondary">Quay lại</a>
-                            <a href="{{route('admin.customers.edit', $customer->id_taikhoan)}}" class="btn btn-warning">Cập nhật</a>
+                            <a href="{{route('admin.customers.edit', $customer->id)}}" class="btn btn-warning">Cập nhật</a>
                         </div>
                         <!--end::Footer-->
                         <!--end::Form-->

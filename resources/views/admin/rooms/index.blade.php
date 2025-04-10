@@ -28,11 +28,20 @@
         <div class="container-fluid">
             <!--begin::Row-->
             <div class="row mb-3">
-                <div class="col-md-12">
+                <div class="col-md-6 mb-3">
                     <a href="{{route('admin.rooms.create')}}" class="btn btn-primary"
                        style="background-color: #B88A44; border-color: #B88A44;"><i class="fa-solid fa-plus"></i>Thêm
                         phòng mới</a>
                 </div>
+                <form action="{{route('admin.rooms.index')}}" method="get">
+                    <div class="col-md-3 d-flex">
+                        <a href="{{route('admin.rooms.index')}}" class="btn btn-sm btn-secondary">Xoa</a>
+                        <input type="text" class="form-control" value="{{request('key')}}" name="key"
+                               placeholder="Nhập tên/email">
+                        <button type="submit" class="btn btn-sm btn-secondary"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </form>
             </div>
             <div class="row">
                 <div class="col-md-12">
