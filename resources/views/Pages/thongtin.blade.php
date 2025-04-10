@@ -11,7 +11,7 @@
 @section('content')
     @include('layout.reuse.steps', ['step' => 1]) <!-- Hiển thị các bước -->
     @include('layout.reuse.count-time') <!-- Nhúng đồng hồ đếm ngược -->
- 
+
 
 
 
@@ -93,7 +93,7 @@
                     <td>
                         <span class="fw-bold text-primary">{{ number_format($room['room_total']) }} VND</span>
                     </td>
-               
+
                 </tr>
                 @endforeach
             </tbody>
@@ -141,6 +141,7 @@
 
     <!-- Thông tin phòng (ẩn nếu không cần chỉnh sửa) -->
     @foreach ($bookedRooms as $index => $room)
+    <input type="hidden" name="rooms[{{ $index }}][room_id]" value="{{ $room['room_id'] }}">
     <input type="hidden" name="rooms[{{ $index }}][room_type]" value="{{ $room['room_type'] }}">
     <input type="hidden" name="rooms[{{ $index }}][check_in]" value="{{ $room['check_in'] }}">
     <input type="hidden" name="rooms[{{ $index }}][check_out]" value="{{ $room['check_out'] }}">

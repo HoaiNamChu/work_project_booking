@@ -187,7 +187,7 @@
     </script>
 
     <div class="thongtinthanhtoan container">
-        <form action="#" method="post">
+        <form action="{{route('payment')}}" method="post">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-7">
@@ -200,9 +200,9 @@
                                 <th>Check out</th>
                                 <th>Số người</th>
                                 <th>Gía</th>
-                                <th> Giảm giá </th>
-                                <th> Thành tiền </th>
-                                
+                                <th> Giảm giá</th>
+                                <th> Thành tiền</th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -214,15 +214,16 @@
                                     <td>{{ $room['rooms'] ?? 1 }}</td>
                                     <td>{{ number_format($room['price_per_night']) }} VND</td>
                                     <td>
-                                    @if($room['discount_percent'] > 0)
+                                        @if($room['discount_percent'] > 0)
                                             <span class="badge bg-success">{{ $room['discount_percent'] }}% OFF</span>
                                         @else
                                             <span class="badge bg-secondary">Không giảm giá</span>
                                         @endif
                                     </td>
                                     <td>
-        <span class="fw-bold text-primary">{{ number_format($room['room_total']) }} VND</span>
-    </td>
+                                        <span
+                                            class="fw-bold text-primary">{{ number_format($room['room_total']) }} VND</span>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -233,28 +234,35 @@
                     <div class="tab-thongtinkhachhang ">
                         <div class="mb-3">
                             <label for="" class="form-label">Họ tên:</label>
-                            <input type="text" name="full_name" value=" {{ $booking['customer']['ho_ten'] }}" class="form-control" disabled required>
+                            <input type="text" name="full_name" value=" {{ $booking['customer']['ho_ten'] }}"
+                                   class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Email:</label>
-                            <input type="email" name="email" value="{{ $booking['customer']['email'] }}" class="form-control" disabled required>
+                            <input type="email" name="email" value="{{ $booking['customer']['email'] }}"
+                                   class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Số điện thoại:</label>
-                            <input type="text" name="phone" value=" {{ $booking['customer']['sdt'] }}" class="form-control" disabled required>
+                            <input type="text" name="phone" value=" {{ $booking['customer']['sdt'] }}"
+                                   class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Nationality:</label>
-                            <input type="text" id="checkIn" value="{{$booking['customer']['nationality']}}" name="nationality" class="form-control" disabled required>
+                            <input type="text" id="checkIn" value="{{$booking['customer']['nationality']}}"
+                                   name="nationality" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Phương thức thanh toán:</label>
-                            <input type="text" id="checkOut" value="{{ $booking['customer']['payment_method'] }}" name="payment_method" class="form-control" disabled required>
+                            <input type="text" id="checkOut" value="{{ $booking['customer']['payment_method'] }}"
+                                   name="payment_method" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Tổng tiền cần thanh toán:</label>
-                            <input type="text" id="checkOut" value="{{ number_format($booking['total_amount'], 0, ',', '.') }} VNĐ" name="total_amount" class="form-control" disabled required>
-                            </div>
+                            <input type="text" id="checkOut"
+                                   value="{{ number_format($booking['total_amount'], 0, ',', '.') }} VNĐ"
+                                   name="total_amount" class="form-control" disabled required>
+                        </div>
                         <div class="mb-3">
                             <button type="submit" class="btn-complete">Đặt phòng</button>
                         </div>
@@ -266,27 +274,27 @@
     </div>
     <script !src="">
 
-        function calculAmount(){
+        function calculAmount() {
             let checkIn = new Date(document.getElementById('checkIn').value);
             let checkOut = new Date(document.getElementById('checkOut').value);
             let roomPrice = 0;
-            let timeStay =  (((checkOut-checkIn)/1000)/60)/60;
+            let timeStay = (((checkOut - checkIn) / 1000) / 60) / 60;
 
-            if (timeStay < 24 && timeStay >= 1){
+            if (timeStay < 24 && timeStay >= 1) {
                 document.getElementsByName('total_price').value = roomPrice;
                 console.log(document.getElementsByName('total_price'))
-
-               document.getElementById('total_price').innerHTML = new Intl.NumberFormat('vi-VN', {
-                   style: 'currency',
-                   currency: 'VND',
-               }).format(roomPrice);
-            }else {
-                document.getElementsByName('total_price').value = roomPrice * (Math.ceil(timeStay/24));
 
                 document.getElementById('total_price').innerHTML = new Intl.NumberFormat('vi-VN', {
                     style: 'currency',
                     currency: 'VND',
-                }).format(roomPrice * (Math.ceil(timeStay/24)));
+                }).format(roomPrice);
+            } else {
+                document.getElementsByName('total_price').value = roomPrice * (Math.ceil(timeStay / 24));
+
+                document.getElementById('total_price').innerHTML = new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND',
+                }).format(roomPrice * (Math.ceil(timeStay / 24)));
             }
 
 

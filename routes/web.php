@@ -51,6 +51,14 @@ Route::get('/payment', [BookingController::class, 'showPaymentPage'])->name('pay
 //Route::get('/payment', [BookingController::class, 'showPaymentPage'])->name('paymentPage');
 Route::post('/booking/submit', [BookingController::class, 'saveBookingWithCustomerInfo'])->name('saveBookingWithCustomerInfo');
 Route::get('/booking/confirm', [BookingController::class, 'showConfirmPage'])->name('confirmBooking');
+
+
+Route::post('/payment', [BookingController::class, 'payment'])->name('payment');
+Route::get('/paymentCallback', [BookingController::class, 'paymentCallback'])->name('paymentCallback');
+
+Route::get('thank-you', [BookingController::class, 'thankYou'])->name('thankYou');
+
+
 //Auth
 
 Route::get('/login', [\App\Http\Controllers\Auth\AuthController::class, 'showFormLogin'])->name('login');
