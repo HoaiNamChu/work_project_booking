@@ -1,6 +1,6 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <!--begin::Sidebar Brand-->
-    <div class="sidebar-brand">
+    <div class="sidebar-brand" style="background-color: #B88A44; ">
         <!--begin::Brand Link-->
         <a href="{{ route('admin.dashboard') }}" class="brand-link">
             <!--begin::Brand Text-->

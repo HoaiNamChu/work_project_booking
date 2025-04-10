@@ -27,7 +27,17 @@
         <!--begin::Container-->
         <div class="container-fluid">
             <!--begin::Row-->
+            <form action="{{route('admin.customers.index')}}" method="get">
+                <div class="row mb-3">
+                    <div class="col-md-3 d-flex">
 
+                        <a href="{{route('admin.customers.index')}}" class="btn btn-sm btn-secondary">Xoa</a>
+                        <input type="text" class="form-control" value="{{request('key')}}" name="key" placeholder="Nhập tên/email">
+                        <button type="submit" class="btn btn-sm btn-secondary"><i
+                                class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+            </form>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
@@ -42,34 +52,37 @@
                                     <th style="width: 10px">#</th>
                                     <th>Full name</th>
                                     <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Nationality</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($customers as $customer)
-                                    @if($customer->is_admin != 1)
-                                        <tr class="align-middle">
-                                            <td>{{$customer->id_taikhoan}}.</td>
-                                            <td>{{$customer->ten}}</td>
-                                            <td>{{$customer->email}}</td>
-                                            <td>
-                                                <a href="{{route('admin.customers.show', $customer->id_taikhoan)}}"
-                                                   class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
-                                                <a href="{{route('admin.customers.edit', $customer->id_taikhoan)}}"
-                                                   class="btn btn-sm btn-warning"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
-                                                <form
-                                                    action="{{route('admin.customers.destroy', $customer->id_taikhoan)}}"
-                                                    class="d-inline" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Bạn có muốn xóa người dùng này không?')">
-                                                        <i class="fa-solid fa-trash"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endif
+                                @foreach($customers as $key => $customer)
+                                    <tr class="align-middle">
+                                        <td>{{$key + 1 + ($customers->currentPage() - 1) * $customers->perPage()}}.</td>
+                                        <td>{{$customer->full_name}}</td>
+                                        <td>{{$customer->email}}</td>
+                                        <td>{{$customer->phone}}</td>
+                                        <td>{{$customer->nationality}}</td>
+                                        <td>
+                                            <a href="{{route('admin.customers.show', $customer->id)}}"
+                                               class="btn btn-sm btn-info"><i class="fa-solid fa-eye"></i></a>
+                                            <a href="{{route('admin.customers.edit', $customer->id)}}"
+                                               class="btn btn-sm btn-warning"><i
+                                                    class="fa-solid fa-pen-to-square"></i></a>
+                                            <form
+                                                action="{{route('admin.customers.destroy', $customer->id)}}"
+                                                class="d-inline" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Bạn có muốn xóa người dùng này không?')">
+                                                    <i class="fa-solid fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
                                 @endforeach
                                 </tbody>
                             </table>

@@ -99,7 +99,7 @@
                     <div class="col-md-6">
                         <div class="card card-primary card-outline mb-4">
                             <div class="card-header">
-                                <div class="card-title">Cập nhật đơn hàng</div>
+                                <div class="card-title">Cập nhật đặt phòng</div>
                             </div>
                             <div class="card-body">
                                 <div class="mb-3">
@@ -162,43 +162,43 @@
 
                                 <!-- Modal chọn phòng -->
                                 <div class="modal fade" id="roomSelectModal" tabindex="-1" aria-labelledby="roomSelectModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Chọn phòng mới</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Chọn</th>
-                                                        <th>Loại phòng</th>
-                                                        <th>Giường</th>
-                                                        <th>Giá</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @foreach($rooms as $room)
-                                                        <tr>
-                                                            <td>
-                                                                <input type="checkbox" name="roomIds[]" value="{{ $room->id }}"
-                                                                    {{ $booking->rooms->contains($room->id) ? 'checked' : '' }}>
-                                                            </td>
-                                                            <td>{{ $room->room_type }}</td>
-                                                            <td>{{ $room->bed_type }}</td>
-                                                            <td>{{ number_format($room->price_per_night) }} VND</td>
-                                                        </tr>
-                                                    @endforeach
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                <button type="button" class="btn btn-primary" id="saveRoomSelection">Lưu phòng</button>
-                                            </div>
-                                        </div>
+                                  <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title">Chọn phòng mới</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <table class="table table-bordered">
+                                          <thead>
+                                            <tr>
+                                              <th>Chọn</th>
+                                              <th>Loại phòng</th>
+                                              <th>Giường</th>
+                                              <th>Giá</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            @foreach($rooms as $room)
+                                            <tr>
+                                              <td>
+                                                <input type="checkbox" name="roomIds[]" value="{{ $room->id }}"
+                                                  {{ $booking->rooms->contains($room->id) ? 'checked' : '' }}>
+                                              </td>
+                                              <td>{{ $room->room_type }}</td>
+                                              <td>{{ $room->bed_type }}</td>
+                                              <td>{{ number_format($room->price_per_night) }} VND</td>
+                                            </tr>
+                                            @endforeach
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn btn-primary" id="saveRoomSelection">Lưu phòng</button>
+                                      </div>
                                     </div>
+                                  </div>
                                 </div>
 
                             </div>
@@ -216,42 +216,42 @@
 @endsection
 
 @section('script')
-    <script>
-        const roomData = @json($rooms);
-        document.getElementById('saveRoomSelection').addEventListener('click', function () {
-            const selectedRoomIds = [];
-            const roomData = @json($rooms); // Truyền dữ liệu phòng từ server sang JS
+<script>
+     const roomData = @json($rooms);
+ document.getElementById('saveRoomSelection').addEventListener('click', function () {
+  const selectedRoomIds = [];
+  const roomData = @json($rooms); // Truyền dữ liệu phòng từ server sang JS
 
-            // Lấy danh sách checkbox được chọn
-            document.querySelectorAll('#roomSelectModal input[name="roomIds[]"]:checked').forEach(checkbox => {
-                selectedRoomIds.push(parseInt(checkbox.value));
-            });
+  // Lấy danh sách checkbox được chọn
+  document.querySelectorAll('#roomSelectModal input[name="roomIds[]"]:checked').forEach(checkbox => {
+    selectedRoomIds.push(parseInt(checkbox.value));
+  });
 
-            // Xóa các input ẩn cũ
-            document.querySelectorAll('input[name="roomBookingId[]"]').forEach(input => input.remove());
+  // Xóa các input ẩn cũ
+  document.querySelectorAll('input[name="roomBookingId[]"]').forEach(input => input.remove());
 
-            const form = document.querySelector('form');
+  const form = document.querySelector('form');
 
-            // Xóa nội dung bảng hiện tại
-            const tableBody = document.querySelector('tbody');
-            tableBody.innerHTML = '';
+  // Xóa nội dung bảng hiện tại
+  const tableBody = document.querySelector('tbody');
+  tableBody.innerHTML = '';
 
-            // Tạo lại bảng hiển thị và input ẩn tương ứng
-            selectedRoomIds.forEach(id => {
-                const room = roomData.find(r => r.id === id);
-                if (room) {
-                    // Tạo input ẩn
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'roomBookingId[]';
-                    input.value = id;
-                    form.appendChild(input);
+  // Tạo lại bảng hiển thị và input ẩn tương ứng
+  selectedRoomIds.forEach(id => {
+    const room = roomData.find(r => r.id === id);
+    if (room) {
+      // Tạo input ẩn
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'roomBookingId[]';
+      input.value = id;
+      form.appendChild(input);
 
-                    // Tạo hàng bảng
-                    const row = document.createElement('tr');
-                    row.classList.add('align-middle');
-                    row.id = `tr_room_${room.id}`;
-                    row.innerHTML = `
+      // Tạo hàng bảng
+      const row = document.createElement('tr');
+      row.classList.add('align-middle');
+      row.id = `tr_room_${room.id}`;
+      row.innerHTML = `
         <td>${room.id}</td>
         <td><img src="/storage/${room.file_anh}" width="100px" alt=""></td>
         <td>${room.room_type}</td>
@@ -265,19 +265,19 @@
           </button>
         </td>
       `;
-                    tableBody.appendChild(row);
-                }
-            });
+      tableBody.appendChild(row);
+    }
+  });
 
-            // Hiển thị thông báo
-            const alertBox = document.getElementById('roomSelectionAlert');
-            alertBox.classList.remove('d-none');
-            setTimeout(() => alertBox.classList.add('d-none'), 3000);
+  // Hiển thị thông báo
+  const alertBox = document.getElementById('roomSelectionAlert');
+  alertBox.classList.remove('d-none');
+  setTimeout(() => alertBox.classList.add('d-none'), 3000);
 
-            // Đóng modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById('roomSelectModal'));
-            modal.hide();
-        });
+  // Đóng modal
+  const modal = bootstrap.Modal.getInstance(document.getElementById('roomSelectModal'));
+  modal.hide();
+});
 
-    </script>
+</script>
 @endsection

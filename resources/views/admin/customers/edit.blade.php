@@ -39,7 +39,7 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
-                        <form action="{{route('admin.customers.update', $customer->id_taikhoan)}}" method="POST">
+                        <form action="{{route('admin.customers.update', $customer->id)}}" method="POST">
                             @csrf
                             @method('PUT')
                             <!--begin::Body-->
@@ -48,7 +48,7 @@
                                     <label for="full_name" class="form-label">Họ tên</label>
                                     <input type="text" class="form-control @error('full_name') is-invalid @enderror"
                                            name="full_name" id="full_name"
-                                           value="{{$customer->ten}}"/>
+                                           value="{{$customer->full_name}}"/>
                                     @error('full_name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -60,6 +60,24 @@
                                            class="form-control @error('email') is-invalid @enderror"
                                            id="exampleInputPassword1"/>
                                     @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Họ tên</label>
+                                    <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                           name="phone" id="phone"
+                                           value="{{$customer->phone}}"/>
+                                    @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nationality" class="form-label">Họ tên</label>
+                                    <input type="text" class="form-control @error('nationality') is-invalid @enderror"
+                                           name="nationality" id="nationality"
+                                           value="{{$customer->nationality}}"/>
+                                    @error('nationality')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>

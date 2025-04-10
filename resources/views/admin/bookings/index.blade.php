@@ -1,4 +1,3 @@
-
 @extends('admin.layout.main')
 
 @section('content')
@@ -36,17 +35,17 @@
                             <h3 class="card-title">Danh sách đặt phòng</h3>
                         </div>
                         <div class="card-body">
-                            <div class="mb-3">
-                                <form method="GET" action="{{ route('admin.bookings.index') }}">
-                                    <label for="statusFilter">Lọc theo trạng thái:</label>
-                                    <select id="statusFilter" name="status" class="form-select" style="width: 200px; display: inline-block;" onchange="this.form.submit()">
-                                        <option value="">Tất cả</option>
-                                        <option value="đang xử lý" {{ request('status') == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-                                        <option value="đã xác nhận" {{ request('status') == 'đã xác nhận' ? 'selected' : '' }}>Đã xác nhận</option>
-                                        <option value="hủy" {{ request('status') == 'hủy' ? 'selected' : '' }}>Hủy</option>
-                                    </select>
-                                </form>
-                            </div>
+                        <div class="mb-3">
+                            <form method="GET" action="{{ route('admin.bookings.index') }}">
+                                <label for="statusFilter">Lọc theo trạng thái:</label>
+                                <select id="statusFilter" name="status" class="form-select" style="width: 200px; display: inline-block;" onchange="this.form.submit()">
+                                    <option value="">Tất cả</option>
+                                    <option value="đang xử lý" {{ request('status') == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
+                                    <option value="đã xác nhận" {{ request('status') == 'đã xác nhận' ? 'selected' : '' }}>Đã xác nhận</option>
+                                    <option value="hủy" {{ request('status') == 'hủy' ? 'selected' : '' }}>Hủy</option>
+                                </select>
+                            </form>
+                        </div>
 
                             <table id="booking-table" class="table table-bordered">
                                 <thead>

@@ -187,7 +187,7 @@
     </script>
 
     <div class="thongtinthanhtoan container">
-        <form action="{{route('payment')}}" method="post">
+        <form action="#" method="post">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-7">
@@ -200,26 +200,29 @@
                                 <th>Check out</th>
                                 <th>Số người</th>
                                 <th>Gía</th>
-                                <th> Giarm giá </th>
+                                <th> Giảm giá </th>
                                 <th> Thành tiền </th>
+                                
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($customerInfo['booked_rooms'] as $item)
+                            @foreach ($bookedRooms as $room)
                                 <tr>
-                                    <td>{{ $item['room_type'] }}</td>
-                                    <td>{{ $item['check_in'] }}</td>
-                                    <td>{{ $item['check_out'] }}</td>
-                                    <td>{{ (int)$item['adults'] + (int)$item['children'] }}</td>
-                                    <td>{{ number_format($item['price_per_night']) }} VNĐ</td>
+                                    <td>{{ $room['room_type'] }}</td>
+                                    <td>{{ $room['check_in'] }}</td>
+                                    <td>{{ $room['check_out'] }}</td>
+                                    <td>{{ $room['rooms'] ?? 1 }}</td>
+                                    <td>{{ number_format($room['price_per_night']) }} VND</td>
                                     <td>
-                                        @if($item['discount_percent']>0)
-                                            <span class="badge bg-success">10.00% OFF</span>
+                                    @if($room['discount_percent'] > 0)
+                                            <span class="badge bg-success">{{ $room['discount_percent'] }}% OFF</span>
                                         @else
-                                            0
+                                            <span class="badge bg-secondary">Không giảm giá</span>
                                         @endif
                                     </td>
-                                    <td>{{ number_format($item['room_total']) }} VNĐ</td>
+                                    <td>
+        <span class="fw-bold text-primary">{{ number_format($room['room_total']) }} VND</span>
+    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -230,28 +233,28 @@
                     <div class="tab-thongtinkhachhang ">
                         <div class="mb-3">
                             <label for="" class="form-label">Họ tên:</label>
-                            <input type="text" name="full_name" value="{{$customerInfo['full_name']}}" class="form-control" disabled required>
+                            <input type="text" name="full_name" value=" {{ $booking['customer']['ho_ten'] }}" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Email:</label>
-                            <input type="email" name="email" value="{{$customerInfo['email']}}" class="form-control" disabled required>
+                            <input type="email" name="email" value="{{ $booking['customer']['email'] }}" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Số điện thoại:</label>
-                            <input type="text" name="phone" value="{{$customerInfo['phone']}}" class="form-control" disabled required>
+                            <input type="text" name="phone" value=" {{ $booking['customer']['sdt'] }}" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Nationality:</label>
-                            <input type="text" id="checkIn" value="{{$customerInfo['nationality']}}" name="nationality" class="form-control" disabled required>
+                            <input type="text" id="checkIn" value="{{$booking['customer']['nationality']}}" name="nationality" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Phương thức thanh toán:</label>
-                            <input type="text" id="checkOut" value="{{$customerInfo['payment_method']}}" name="payment_method" class="form-control" disabled required>
+                            <input type="text" id="checkOut" value="{{ $booking['customer']['payment_method'] }}" name="payment_method" class="form-control" disabled required>
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Tổng tiền cần thanh toán:</label>
-                            <input type="text" id="checkOut" value="{{number_format($customerInfo['total_amount'])}} VNĐ" name="total_amount" class="form-control" disabled required>
-                        </div>
+                            <input type="text" id="checkOut" value="{{ number_format($booking['total_amount'], 0, ',', '.') }} VNĐ" name="total_amount" class="form-control" disabled required>
+                            </div>
                         <div class="mb-3">
                             <button type="submit" class="btn-complete">Đặt phòng</button>
                         </div>

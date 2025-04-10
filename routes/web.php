@@ -56,8 +56,8 @@ Route::get('/booking/confirm', [BookingController::class, 'showConfirmPage'])->n
 Route::get('/login', [\App\Http\Controllers\Auth\AuthController::class, 'showFormLogin'])->name('login');
 Route::post('/login', [\App\Http\Controllers\Auth\AuthController::class, 'login'])->name('login');
 
-Route::get('/register', [\App\Http\Controllers\Auth\AuthController::class, 'showFormRegister'])->name('register');
-Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name('register');
+//Route::get('/register', [\App\Http\Controllers\Auth\AuthController::class, 'showFormRegister'])->name('register');
+//Route::post('/register', [\App\Http\Controllers\Auth\AuthController::class, 'register'])->name('register');
 
 Route::get('/logout', [\App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('logout');
 

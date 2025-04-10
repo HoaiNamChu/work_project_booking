@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3306
--- Thời gian đã tạo: Th3 24, 2025 lúc 01:49 PM
+-- Thời gian đã tạo: Th3 31, 2025 lúc 10:14 AM
 -- Phiên bản máy phục vụ: 8.3.0
 -- Phiên bản PHP: 8.2.18
 
@@ -41,7 +41,14 @@ CREATE TABLE IF NOT EXISTS `capacity` (
 INSERT INTO `capacity` (`room_id`, `max_capacity`) VALUES
 (1, 2),
 (2, 4),
-(3, 5);
+(3, 5),
+(4, 3),
+(5, 4),
+(6, 6),
+(7, 2),
+(8, 3),
+(9, 4),
+(10, 5);
 
 -- --------------------------------------------------------
 
@@ -147,7 +154,37 @@ CREATE TABLE IF NOT EXISTS `discount` (
   `end_date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `room_id` (`room_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `discount`
+--
+
+INSERT INTO `discount` (`id`, `room_id`, `discount_percent`, `start_date`, `end_date`) VALUES
+(1, 1, 10.00, '2025-04-01', '2025-05-01'),
+(2, 2, 15.50, '2025-04-10', '2025-04-20'),
+(3, 3, 20.00, '2025-05-01', '2025-05-10'),
+(4, 4, 10.00, '2025-04-10', '2025-04-20'),
+(5, 5, 15.00, '2025-05-05', '2025-05-15'),
+(6, 6, 20.00, '2025-06-01', '2025-06-10'),
+(7, 7, 12.00, '2025-07-07', '2025-07-17'),
+(8, 8, 18.00, '2025-04-25', '2025-05-05'),
+(9, 9, 25.00, '2025-06-15', '2025-06-25'),
+(10, 10, 30.00, '2025-07-01', '2025-07-10');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -258,7 +295,6 @@ INSERT INTO `room_booking_detail` (`id`, `booking_id`, `room_id`) VALUES
 (12, 15, 2),
 (13, 16, 3),
 (14, 17, 1),
-(15, 18, 5),
 (16, 19, 1);
 
 -- --------------------------------------------------------
@@ -276,21 +312,26 @@ CREATE TABLE IF NOT EXISTS `room_detail` (
   `view` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `price_per_night` decimal(10,0) NOT NULL,
   `remaining_rooms` int NOT NULL,
-  `image_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `file_anh` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `room_detail`
 --
 
-INSERT INTO `room_detail` (`id`, `room_type`, `bed_type`, `area`, `view`, `price_per_night`, `remaining_rooms`, `image_url`, `description`, `file_anh`) VALUES
-(1, 'Standard', 'vip', '25', 'Garden View', 500000, 2, 'https://pix8.agoda.net/hotelImages/32821722/533710535/ceb1a26569f81c18217b0b943b607c3c.jpg?ce=0&s=1024x', 'Phòng Standard với thiết kế tối giản nhưng tinh tế, phù hợp với khách du lịch hoặc công tác. Phòng rộng 25m², có giường VIP thoải mái, tầm nhìn ra khu vườn xanh mát giúp tạo cảm giác thư giãn. Trang bị đầy đủ tiện nghi: TV màn hình phẳng, điều hòa, minibar, bàn làm việc và WiFi tốc độ cao.', NULL),
-(2, 'Deluxe', 'King', '35', 'Sea View', 800000, 3, 'https://pix8.agoda.net/property/902/612888323/4b5b42cefda33de4fb6b580c0ddd503c.jpeg?s=1024x', 'Phòng Deluxe rộng rãi với diện tích 35m², giường King cỡ lớn mang lại giấc ngủ thoải mái. Tầm nhìn hướng biển tuyệt đẹp, lý tưởng cho các cặp đôi hoặc kỳ nghỉ thư giãn. Phòng được trang bị phòng tắm riêng với bồn tắm sang trọng, TV 50 inch, minibar, máy pha cà phê và khu vực tiếp khách.', NULL),
-(3, 'Superior', 'Twin', '30', 'Mountain View', 600000, 8, 'https://pix8.agoda.net/property/902/0/d212993ef90fa024e37b9370dc97fae4.jpeg?ce=0&s=1024x', 'Phòng Superior rộng 30m², thiết kế hiện đại với hai giường đơn, phù hợp cho nhóm bạn hoặc gia đình nhỏ. Hướng nhìn ra núi tạo không gian yên bình, thư giãn. Phòng có đầy đủ tiện ích: điều hòa, TV truyền hình cáp, minibar, két an toàn, bàn làm việc và phòng tắm riêng với vòi sen cao cấp.', NULL),
-(5, 'vip', 'king', '22', 'núi', 300000, 4, 'https://ak-d.tripcdn.com/images/0221212000en8x4f14B50_R_600_400_R5.webp', 'Phòng VIP đẳng cấp với diện tích 22m², giường King cao cấp, thiết kế sang trọng với nội thất gỗ cao cấp và không gian ấm cúng. Tầm nhìn hướng núi, mang lại cảm giác thư giãn tuyệt đối. Phòng có khu vực tiếp khách riêng, minibar, TV 55 inch, hệ thống âm thanh chất lượng cao, bồn tắm sục và dịch vụ phòng 24/7.', NULL);
+INSERT INTO `room_detail` (`id`, `room_type`, `bed_type`, `area`, `view`, `price_per_night`, `remaining_rooms`, `description`, `file_anh`) VALUES
+(1, 'Standard', 'vip', '25', 'Garden View', 500000, 2, 'Phòng Standard với thiết kế tối giản nhưng tinh tế, phù hợp với khách du lịch hoặc công tác. Phòng rộng 25m², có giường VIP thoải mái, tầm nhìn ra khu vườn xanh mát giúp tạo cảm giác thư giãn. Trang bị đầy đủ tiện nghi: TV màn hình phẳng, điều hòa, minibar, bàn làm việc và WiFi tốc độ cao.', 'standard.jpg'),
+(2, 'Deluxe', 'King', '35', 'Sea View', 800000, 3, 'Phòng Deluxe rộng rãi với diện tích 35m², giường King cỡ lớn mang lại giấc ngủ thoải mái. Tầm nhìn hướng biển tuyệt đẹp, lý tưởng cho các cặp đôi hoặc kỳ nghỉ thư giãn. Phòng được trang bị phòng tắm riêng với bồn tắm sang trọng, TV 50 inch, minibar, máy pha cà phê và khu vực tiếp khách.', 'deluxe.jpg'),
+(3, 'Superior', 'Twin', '30', 'Mountain View', 600000, 8, 'Phòng Superior rộng 30m², thiết kế hiện đại với hai giường đơn, phù hợp cho nhóm bạn hoặc gia đình nhỏ. Hướng nhìn ra núi tạo không gian yên bình, thư giãn. Phòng có đầy đủ tiện ích: điều hòa, TV truyền hình cáp, minibar, két an toàn, bàn làm việc và phòng tắm riêng với vòi sen cao cấp.', 'superior.jpg'),
+(4, 'Suite', 'King', '42', 'Ocean View', 1100000, 5, 'Phòng Suite cao cấp, rộng rãi với tầm nhìn hướng biển.', 'suite.jpg'),
+(5, 'Grand Deluxe', 'Queen', '38', 'City View', 950000, 4, 'Phòng Grand Deluxe sang trọng, đầy đủ tiện nghi.', 'grand_deluxe.jpg'),
+(6, 'Family', 'Double', '40', 'Pool View', 900000, 4, 'Phòng Family rộng rãi, phù hợp cho gia đình.', 'family.jpg'),
+(7, 'Presidential Suite', 'King', '50', 'Ocean View', 1500000, 2, 'Phòng Tổng thống sang trọng, view biển.', 'presidential.jpg'),
+(8, 'Executive', 'Queen', '32', 'City View', 700000, 6, 'Phòng Executive hiện đại, tiện nghi cao cấp.', 'executive.jpg'),
+(9, 'Classic', 'Twin', '28', 'Garden View', 550000, 5, 'Phòng Classic có thiết kế ấm cúng, gần gũi.', 'classic.jpg'),
+(10, 'Luxury', 'King', '45', 'Sea View', 1300000, 3, 'Phòng Luxury đẳng cấp với không gian rộng rãi.', 'luxury.jpg');
 
 -- --------------------------------------------------------
 
@@ -333,9 +374,10 @@ CREATE TABLE IF NOT EXISTS `searching` (
 DROP TABLE IF EXISTS `slideshow`;
 CREATE TABLE IF NOT EXISTS `slideshow` (
   `S_ID` int NOT NULL AUTO_INCREMENT,
-  `S_img` text COLLATE utf8mb4_general_ci NOT NULL,
-  `caption1` text COLLATE utf8mb4_general_ci NOT NULL,
-  `caption2` text COLLATE utf8mb4_general_ci NOT NULL,
+  `S_img` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `S_file` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `caption1` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `caption2` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`S_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -343,12 +385,11 @@ CREATE TABLE IF NOT EXISTS `slideshow` (
 -- Đang đổ dữ liệu cho bảng `slideshow`
 --
 
-INSERT INTO `slideshow` (`S_ID`, `S_img`, `caption1`, `caption2`) VALUES
-(15, 'img/goden_banner.jpg', 'Spend Your Holiday', 'Explore new experience with Golden Tree Hotel'),
-(16, 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/416159326.jpg?k=49f57d2e204ca8f77529318a830f5f61b9d36c0de02c1da88bd232898c9736d2&o=&hp=1', 'Nature meets Comfort', 'Explore new experience with Golden Tree Hotel'),
-(17, 'https://images.trvl-media.com/lodging/1000000/10000/9100/9100/e6ebefae.jpg?impolicy=resizecrop&rw=1200&ra=fit', 'Unwind with Us', 'Explore new experience with Golden Tree Hotel'),
-(18, 'img/banner_bed.jpg', 'Feel at Home', 'Explore new experience with Golden Tree Hotel'),
-(19, 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/354661255.jpg?k=c3e75d3bc28b232bc41f4295e28f39d214794b2621babeae2e465c11bcea71af&o=&hp=1', '', '');
+INSERT INTO `slideshow` (`S_ID`, `S_img`, `S_file`, `caption1`, `caption2`) VALUES
+(15, 'img/slide1.jpg', 'slideshow/slide1.jpg', 'Spend Your Holiday', 'Explore new experience with Golden Tree Hotel'),
+(16, 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/416159326.jpg?k=49f57d2e204ca8f77529318a830f5f61b9d36c0de02c1da88bd232898c9736d2&o=&hp=1', 'slideshow/slide3.jpg', 'Nature meets Comfort', 'Explore new experience with Golden Tree Hotel'),
+(17, 'https://images.trvl-media.com/lodging/1000000/10000/9100/9100/e6ebefae.jpg?impolicy=resizecrop&rw=1200&ra=fit', 'slideshow/slide4.jpg', 'Unwind with Us', 'Explore new experience with Golden Tree Hotel'),
+(18, 'img/banner_bed.jpg', 'slideshow/slide3.jpg', 'Feel at Home', 'Explore new experience with Golden Tree Hotel');
 
 -- --------------------------------------------------------
 
@@ -371,6 +412,25 @@ CREATE TABLE IF NOT EXISTS `taikhoan` (
 
 INSERT INTO `taikhoan` (`id_taikhoan`, `ten`, `email`, `password`) VALUES
 (1, 'Admin1', 'phuc08@gmail.com', '6c722b61037af619c6441b0d73f5d2d8');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
