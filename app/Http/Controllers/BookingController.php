@@ -106,10 +106,10 @@ class BookingController extends Controller
 
 
         $customer = Customer::query()->create([
-           'full_name' => $customerInfo['ho_ten'],
-           'email' => $customerInfo['email'],
-           'phone' => $customerInfo['sdt'],
-           'nationality' => $customerInfo['nationality'],
+            'full_name' => $customerInfo['ho_ten'],
+            'email' => $customerInfo['email'],
+            'phone' => $customerInfo['sdt'],
+            'nationality' => $customerInfo['nationality'],
         ]);
 
         $booking = Booking::query()->create([
@@ -127,7 +127,7 @@ class BookingController extends Controller
 
             DB::table('room_booking_detail')->insert([
                 'room_id' => $item['room_id'],
-                'booking_id'=> $booking->id,
+                'booking_id' => $booking->id,
             ]);
         }
 
@@ -140,14 +140,14 @@ class BookingController extends Controller
             'payment_method' => $bookingInfo['customer']['payment_method'],
         ]);
 
-        if ($bookingInfo['customer']['payment_method'] == 'VNPAY'){
-            $this->processOnlinePayment($payment);
+        if ($bookingInfo['customer']['payment_method'] == 'VNPAY') {
+            return $this->processOnlinePayment($payment);
         }
 
         foreach ($bookingInfo['rooms'] as $item) {
             $room = Room::query()->where('id', $item['room_id'])->first();
 
-            if ($room->remaining_rooms >= $item['rooms'] && $room->remaining_rooms != 0 ) {
+            if ($room->remaining_rooms >= $item['rooms'] && $room->remaining_rooms != 0) {
                 $room->update([
                     'remaining_rooms' => $room->remaining_rooms - $item['rooms'],
                 ]);
@@ -190,7 +190,6 @@ class BookingController extends Controller
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
         );
-
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -208,7 +207,6 @@ class BookingController extends Controller
         $vnp_Url = $vnp_Url . "?" . $query;
         $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
         $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-
         return redirect($vnp_Url);
     }
 
@@ -248,7 +246,7 @@ class BookingController extends Controller
             foreach ($bookingInfo['rooms'] as $item) {
                 $room = Room::query()->where('id', $item['room_id'])->first();
 
-                if ($room->remaining_rooms >= $item['rooms'] && $room->remaining_rooms != 0 ) {
+                if ($room->remaining_rooms >= $item['rooms'] && $room->remaining_rooms != 0) {
                     $room->update([
                         'remaining_rooms' => $room->remaining_rooms - $item['rooms'],
                     ]);
