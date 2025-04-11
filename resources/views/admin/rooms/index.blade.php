@@ -71,7 +71,7 @@
                                     <tr class="align-middle">
                                         <td>{{$room->id}}.</td>
                                         <td><img src="{{\Illuminate\Support\Facades\Storage::url($room->file_anh)}}"
-                                                 alt="" srcset="" width="100px">
+                                                 alt="" srcset="" width="100" height="100">
                                         </td>
                                         <td>{{$room->room_type}}</td>
                                         <td>{{$room->bed_type}}</td>

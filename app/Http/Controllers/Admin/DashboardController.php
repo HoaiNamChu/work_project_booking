@@ -20,7 +20,7 @@ class DashboardController extends Controller
     {
         $bookingCount = Booking::query()->count();
 
-        $customerCount = DB::table('taikhoan')->count();
+        $customerCount = DB::table('customer')->count();
 
         $roomCount = Room::query()->count();
 

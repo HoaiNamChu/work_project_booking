@@ -35,7 +35,7 @@
                     <div class="card card-primary card-outline mb-4">
                         <!--begin::Header-->
                         <div class="card-header">
-                            <div class="card-title">Thêm phòng mới</div>
+                            <div class="card-title">Sửa thông tin phòng</div>
                         </div>
                         <!--end::Header-->
                         <!--begin::Form-->
@@ -56,6 +56,11 @@
                                 <div class="input-group mb-3">
                                     <input type="file" class="form-control" name="image" id="inputGroupFile02"/>
                                     <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                </div>
+                                <div class="mb-3">
+                                    @if(isset($room->file_anh))
+                                        <img src="{{ \Illuminate\Support\Facades\Storage::url($room->file_anh) }}" alt="" width="70" height="70">
+                                    @endif
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Bed type</label>

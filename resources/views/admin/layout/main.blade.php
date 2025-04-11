@@ -25,6 +25,8 @@
     <!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
           integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous"/>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{asset('/admin/css/adminlte.css')}}"/>
@@ -119,6 +121,8 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="{{asset('/admin/js/adminlte.js')}}"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
@@ -161,6 +165,28 @@
     cardHeaders.forEach((cardHeader) => {
         cardHeader.style.cursor = 'move';
     });
+</script>
+
+<script>
+    @if(session('success'))
+    Toastify({
+        text: "{{session('success')}}",
+        duration: 3000, // 3 giây
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#4CAF50",
+    }).showToast();
+    @endif
+
+    @if(session('error'))
+    Toastify({
+        text: "{{session('error')}}",
+        duration: 3000, // 3 giây
+        gravity: "top",
+        position: "right",
+        backgroundColor: "#F44336",
+    }).showToast();
+    @endif
 </script>
 
 @yield('script')

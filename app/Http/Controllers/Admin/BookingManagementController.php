@@ -26,6 +26,23 @@ public function index(Request $request)
         $query->where('status', $request->status);
     }
 
+    if (request('check_in') !== null && request('check_out') == null){
+        $query->where('check_in', '>=', Carbon::parse(request('check_in'))->format('Y-m-d'));
+    }
+
+    if (request('check_in') == null && request('check_out') !== null){
+        $query->where('check_out', '<=', Carbon::parse(request('check_out'))->format('Y-m-d'));
+    }
+
+    if (request('check_in') !== null && request('check_out') !== null) {
+        if (Carbon::parse(request('check_in'))->format('Y-m-d') > Carbon::parse(request('check_out'))->format('Y-m-d')) {
+            return redirect()->back()->with('error', 'Check-in must be after check out');
+        }
+
+        $query->where('check_in', '>=', Carbon::parse(request('check_in'))->format('Y-m-d'))
+        ->where('check_out', '<=', Carbon::parse(request('check_out'))->format('Y-m-d'));
+    }
+
     $roomBookings = $query->paginate(10)->withQueryString();
 
     return view('admin.bookings.index', compact('roomBookings'));
@@ -95,6 +112,6 @@ public function update(Request $request, $id)
 
         $booking->delete();
 
-        return redirect()->route('admin.bookings.index');
+        return redirect()->route('admin.bookings.index')->with('success', 'Xóa đơn đặt phòng thành công!');
     }
 }

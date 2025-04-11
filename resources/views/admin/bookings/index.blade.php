@@ -35,17 +35,40 @@
                             <h3 class="card-title">Danh sách đặt phòng</h3>
                         </div>
                         <div class="card-body">
-                        <div class="mb-3">
-                            <form method="GET" action="{{ route('admin.bookings.index') }}">
-                                <label for="statusFilter">Lọc theo trạng thái:</label>
-                                <select id="statusFilter" name="status" class="form-select" style="width: 200px; display: inline-block;" onchange="this.form.submit()">
-                                    <option value="">Tất cả</option>
-                                    <option value="đang xử lý" {{ request('status') == 'đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
-                                    <option value="đã xác nhận" {{ request('status') == 'đã xác nhận' ? 'selected' : '' }}>Đã xác nhận</option>
-                                    <option value="hủy" {{ request('status') == 'hủy' ? 'selected' : '' }}>Hủy</option>
-                                </select>
-                            </form>
-                        </div>
+                            <div class="mb-3">
+                                <form method="GET" action="{{ route('admin.bookings.index') }}">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="statusFilter" class="form-label">Lọc theo trạng thái:</label>
+                                            <select id="statusFilter" name="status" class="form-select"
+                                                    style="width: 200px; display: inline-block;" onchange="this.form.submit()">
+                                                <option value="">Tất cả</option>
+                                                <option
+                                                    value="đang xử lý" {{ request('status') == 'đang xử lý' ? 'selected' : '' }}>
+                                                    Đang xử lý
+                                                </option>
+                                                <option
+                                                    value="đã xác nhận" {{ request('status') == 'đã xác nhận' ? 'selected' : '' }}>
+                                                    Đã xác nhận
+                                                </option>
+                                                <option value="hủy" {{ request('status') == 'hủy' ? 'selected' : '' }}>Hủy
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="check_in" class="form-label">Check in:</label>
+                                            <input type="date" onchange="this.form.submit()" value="{{request('check_in')}}" style="width: 200px; display: inline-block;" class="form-control" name="check_in" id="check_in">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="check_out" class="form-label">Check out:</label>
+                                            <input type="date" onchange="this.form.submit()" value="{{request('check_out')}}" style="width: 200px; display: inline-block;" class="form-control" name="check_out" id="check_out">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="{{route('admin.bookings.index')}}" class="btn btn-secondary">Xóa</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
                             <table id="booking-table" class="table table-bordered">
                                 <thead>
@@ -60,9 +83,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($roomBookings as $roomBooking)
+                                @foreach($roomBookings as $key => $roomBooking)
                                     <tr class="align-middle">
-                                        <td>{{$roomBooking->id}}</td>
+                                        <td>{{$key + 1 + ($roomBookings->currentPage() - 1) * $roomBookings->perPage()}}</td>
                                         <td>{{$roomBooking->customer->full_name ?? 'Khách vãng lai'}}</td>
                                         <td>{{date('d/m/Y', strtotime($roomBooking->check_in))}}</td>
                                         <td>{{date('d/m/Y', strtotime($roomBooking->check_out))}}</td>
@@ -77,11 +100,15 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{route('admin.bookings.edit', $roomBooking->id)}}" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
-                                            <form action="{{route('admin.bookings.destroy', $roomBooking->id)}}" class="d-inline" method="post">
+                                            <a href="{{route('admin.bookings.edit', $roomBooking->id)}}"
+                                               class="btn btn-sm btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            <form action="{{route('admin.bookings.destroy', $roomBooking->id)}}"
+                                                  class="d-inline" method="post">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Bạn có muốn xóa đơn này không?')"><i class="fa-solid fa-trash"></i></button>
+                                                <button class="btn btn-sm btn-danger" type="submit"
+                                                        onclick="return confirm('Bạn có muốn xóa đơn này không?')"><i
+                                                        class="fa-solid fa-trash"></i></button>
                                             </form>
                                         </td>
                                     </tr>

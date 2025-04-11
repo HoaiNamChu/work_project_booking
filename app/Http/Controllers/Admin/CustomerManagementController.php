@@ -100,7 +100,7 @@ class CustomerManagementController extends Controller
 
         $customer = DB::table('customer')->where('id', $id)->update($data);
 
-        return redirect()->route('admin.customers.index');
+        return redirect()->route('admin.customers.index')->with('success', 'Customer updated successfully');
 
     }
 
@@ -116,6 +116,6 @@ class CustomerManagementController extends Controller
 
         $customer->delete();
 
-        return redirect()->route('admin.customers.index');
+        return redirect()->route('admin.customers.index')->with('success', 'Customer deleted successfully');
     }
 }
